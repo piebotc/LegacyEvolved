@@ -17,6 +17,7 @@ public:
     float oFlapSpeed, oFlap;
     float flapping;
     int eggTime;
+	bool isChickenJockey;
 
 private:	
 	void _init();
@@ -39,6 +40,9 @@ protected:
 	virtual void playStepSound(int xt, int yt, int zt, int t);
     virtual int getDeathLoot();
 	virtual void dropDeathLoot(bool wasKilledByPlayer, int playerBonusLevel);
+	
+	virtual void addAdditonalSaveData(CompoundTag *tag);
+	virtual void readAdditionalSaveData(CompoundTag *tag);
 
 public:
 	virtual shared_ptr<AgableMob> getBreedOffspring(shared_ptr<AgableMob> target);

@@ -20,6 +20,7 @@ void Chicken::_init()
 	flapping = 1;
 	oFlapSpeed = oFlap = 0.0f;
 	eggTime = 0;
+	isChickenJockey = false;
 }
 
 Chicken::Chicken(Level *level) : Animal( level )
@@ -77,7 +78,7 @@ void Chicken::aiStep()
 
 	flap += flapping * 2;
 
-	if (!isBaby())
+	if (!isBaby() && !isChickenJockey)
 	{
 		if (!level->isClientSide && --eggTime <= 0) 
 		{
@@ -136,6 +137,20 @@ void Chicken::dropDeathLoot(bool wasKilledByPlayer, int playerBonusLevel)
 	{
 		spawnAtLocation(Item::chicken_raw_Id, 1);
 	}
+}
+
+void Chicken::addAdditonalSaveData(CompoundTag *tag)
+{
+	Animal::addAdditonalSaveData(tag);
+
+	if (isChickenJockey) tag->putBoolean(L"IsChickenJockey", true);
+}
+
+void Chicken::readAdditionalSaveData(CompoundTag *tag)
+{
+	Animal::readAdditionalSaveData(tag);
+
+	if (tag->getBoolean(L"IsChickenJockey")) isChickenJockey = true;
 }
 
 shared_ptr<AgableMob> Chicken::getBreedOffspring(shared_ptr<AgableMob> target)
