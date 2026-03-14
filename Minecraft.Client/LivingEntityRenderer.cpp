@@ -357,7 +357,7 @@ void LivingEntityRenderer::renderArrows(shared_ptr<LivingEntity> mob, float a)
 
 int LivingEntityRenderer::prepareArmorOverlay(shared_ptr<LivingEntity> mob, int layer, float a)
 {
-	return prepareArmor(mob, layer, a);
+	return -1;
 }
 
 int LivingEntityRenderer::prepareArmor(shared_ptr<LivingEntity> mob, int layer, float a) 

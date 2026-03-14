@@ -51,19 +51,6 @@ void SheepFurModel::prepareMobModel(shared_ptr<LivingEntity> mob, float time, fl
 	headXRot = sheep->getHeadEatAngleScale(a);
 
     wstring name = mob->getAName();
-    if (name == L"jeb_")
-    {
-        int i1 = 25;
-        int i = mob->tickCount / 25;
-        int j = Sheep::COLOR_LENGTH;
-        int k = i % j;
-        int l = (i + 1) % j;
-        float f = ((float)(mob->tickCount % 25) + time) / 25.0F;
-        const float* afloat1 = Sheep::COLOR[k];
-        const float* afloat2 = Sheep::COLOR[l];
-
-        RenderManager.StateSetColour(afloat1[0] * (1.0F - f) + afloat2[0] * f, afloat1[1] * (1.0F - f) + afloat2[1] * f, afloat1[2] * (1.0F - f) + afloat2[2] * f, 1.0f);
-    }
 }
 
 void SheepFurModel::setupAnim(float time, float r, float bob, float yRot, float xRot, float scale, shared_ptr<Entity> entity, unsigned int uiBitmaskOverrideAnim)

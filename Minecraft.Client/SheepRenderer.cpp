@@ -27,25 +27,30 @@ int SheepRenderer::prepareArmor(shared_ptr<LivingEntity> _sheep, int layer, floa
 		{
 			// easter egg...
 			int colorDuration = 25;
-			int value = (sheep->tickCount / colorDuration) + sheep->entityId;
+			int value = (sheep->tickCount / colorDuration);
 			int c1 = value % Sheep::COLOR_LENGTH;
 			int c2 = (value + 1) % Sheep::COLOR_LENGTH;
 			float subStep = ((sheep->tickCount % colorDuration) + a) / static_cast<float>(colorDuration);
 
-			glColor3f(Sheep::COLOR[c1][0] * (1.0f - subStep) + Sheep::COLOR[c2][0] * subStep, Sheep::COLOR[c1][1] * (1.0f - subStep) + Sheep::COLOR[c2][1] * subStep, Sheep::COLOR[c1][2]
-			* (1.0f - subStep) + Sheep::COLOR[c2][2] * subStep);
+			float r = Sheep::COLOR[c1][0] * (1.0f - subStep) + Sheep::COLOR[c2][0] * subStep;
+			float g = Sheep::COLOR[c1][1] * (1.0f - subStep) + Sheep::COLOR[c2][1] * subStep;
+			float b = Sheep::COLOR[c1][2] * (1.0f - subStep) + Sheep::COLOR[c2][2] * subStep;
+
+			float brightness = SharedConstants::TEXTURE_LIGHTING ? 1.0f : sheep->getBrightness(a);
+			glColor3f(r * brightness, g * brightness, b * brightness);
 		}
 		else
 		{
 			int color = sheep->getColor();
-			glColor3f(Sheep::COLOR[color][0], Sheep::COLOR[color][1], Sheep::COLOR[color][2]);
+
+			float r = Sheep::COLOR[color][0];
+			float g = Sheep::COLOR[color][1];
+			float b = Sheep::COLOR[color][2];
+
+			float brightness = SharedConstants::TEXTURE_LIGHTING ? 1.0f : sheep->getBrightness(a);
+			glColor3f(r * brightness, g * brightness, b * brightness);
 		}
 
-
-		// 4J - change brought forward from 1.8.2
-        float brightness = SharedConstants::TEXTURE_LIGHTING ? 1.0f : sheep->getBrightness(a);
-        int color = sheep->getColor();
-        glColor3f(brightness * Sheep::COLOR[color][0], brightness * Sheep::COLOR[color][1], brightness * Sheep::COLOR[color][2]);
         return 1;
     }
     return -1;
